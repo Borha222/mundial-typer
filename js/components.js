@@ -5,11 +5,12 @@
  */
 
 import { TEAMS, PLAYERS, MATCHES } from './matches.js';
-import { calculateRoomLeaderboard } from './scoring.js';
+import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js';
 
 export class UIComponents {
   constructor(app) {
     this.app = app;
+    this.expandedUsers = new Set();
   }
 
   /**
@@ -381,6 +382,7 @@ export class UIComponents {
 
         const isMe = user.username === currentUser;
 
+        const isExpanded = this.expandedUsers && this.expandedUsers.has(user.username);
         return `
           <tr class="leaderboard-row ${isMe ? 'row-highlight' : ''}" data-username="${user.username}">
             <td class="text-center font-bold rank-cell">${medal}</td>
@@ -389,9 +391,9 @@ export class UIComponents {
             <td class="text-center text-success">${user.exactCount} x 5pkt</td>
             <td class="text-center text-cyan">${user.outcomeCount} x 3pkt</td>
             <td class="text-center text-purple">${user.specialPoints} pkt</td>
-            <td class="text-center"><button class="btn btn-sm btn-outline-cyan view-bets-btn" data-user="${user.username}">Szczegóły 🔍</button></td>
+            <td class="text-center"><button class="btn btn-sm btn-outline-cyan view-bets-btn" data-user="${user.username}">${isExpanded ? 'Zwiń ▴' : 'Szczegóły 🔍'}</button></td>
           </tr>
-          <tr id="bets-detail-${user.username}" class="bets-detail-row hidden glass">
+          <tr id="bets-detail-${user.username}" class="bets-detail-row ${isExpanded ? '' : 'hidden'} glass">
             <td colspan="7">
               <div class="bets-detail-expanded">
                 <h4>Szczegóły typów gracza <span class="text-neon-cyan">${user.username}</span>:</h4>
@@ -466,6 +468,7 @@ export class UIComponents {
                         };
 
                         const getTeamNameAndFlag = (id) => {
+                          if (!id) return '';
                           const t = TEAMS.find(x => x.id === id);
                           return t ? `${t.flag} ${t.name}` : id;
                         };
@@ -527,9 +530,11 @@ export class UIComponents {
         if (detailRow.classList.contains('hidden')) {
           detailRow.classList.remove('hidden');
           btn.textContent = 'Zwiń ▴';
+          this.expandedUsers.add(username);
         } else {
           detailRow.classList.add('hidden');
           btn.textContent = 'Szczegóły 🔍';
+          this.expandedUsers.delete(username);
         }
       });
     });

@@ -436,7 +436,7 @@ export class AppDB {
       }
     }
 
-    // LocalStorage fallback subscription / pull model simulation
+    // LocalStorage fallback subscription using native events (zero polling!)
     const getLocalRoomData = () => {
       const rooms = JSON.parse(localStorage.getItem('wc_rooms') || '{}');
       return rooms[roomCode] || null;
@@ -446,16 +446,28 @@ export class AppDB {
     const initialData = getLocalRoomData();
     if (initialData) onUpdate(initialData);
 
-    // Set up an interval or handle storage events for simulating real-time local sync
-    const intervalId = setInterval(() => {
-      const currentData = getLocalRoomData();
-      if (currentData) {
-        onUpdate(currentData);
+    // Event listener for updates in the same tab
+    const handleLocalUpdate = (e) => {
+      if (e.detail && e.detail.roomCode === roomCode) {
+        const currentData = getLocalRoomData();
+        if (currentData) onUpdate(currentData);
       }
-    }, 1000);
+    };
+
+    // Event listener for updates from other tabs (native storage event)
+    const handleStorageUpdate = (e) => {
+      if (e.key === 'wc_rooms') {
+        const currentData = getLocalRoomData();
+        if (currentData) onUpdate(currentData);
+      }
+    };
+
+    window.addEventListener('wc_db_update', handleLocalUpdate);
+    window.addEventListener('storage', handleStorageUpdate);
 
     return () => {
-      clearInterval(intervalId);
+      window.removeEventListener('wc_db_update', handleLocalUpdate);
+      window.removeEventListener('storage', handleStorageUpdate);
       delete this.listeners[roomCode];
     };
   }
@@ -479,6 +491,9 @@ export class AppDB {
 
       rooms[roomCode] = { ...rooms[roomCode], ...updatedFields };
       localStorage.setItem('wc_rooms', JSON.stringify(rooms));
+
+      // Dispatch custom local event for instant, zero-polling reactive UI update
+      window.dispatchEvent(new CustomEvent('wc_db_update', { detail: { roomCode } }));
     }
   }
 
