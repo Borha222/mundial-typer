@@ -6,6 +6,16 @@
  * 2. Firebase Mode (using cloud Firestore & Auth) - real-time global multiplayer.
  */
 
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDrdmA5jfFVajkro5qsShm1cg-o0b-Maf0",
+  authDomain: "mundialtyper-b148f.firebaseapp.com",
+  projectId: "mundialtyper-b148f",
+  storageBucket: "mundialtyper-b148f.firebasestorage.app",
+  messagingSenderId: "77644536232",
+  appId: "1:77644536232:web:8c31deca4e765d8313259d",
+  measurementId: "G-GGZS3KP9G3"
+};
+
 export class AppDB {
   constructor() {
     this.isFirebase = false;
@@ -21,26 +31,46 @@ export class AppDB {
    * Initializes the database mode based on saved Firebase configuration.
    */
   async initMode() {
+    // Check if the user explicitly chose to use LocalStorage
+    const useLocal = localStorage.getItem('wc_use_local_storage') === 'true';
+    if (useLocal) {
+      console.log("LocalStorage mode explicitly requested by user.");
+      return;
+    }
+
+    // Try custom config from LocalStorage first, then fall back to the default global config
     const savedConfig = localStorage.getItem('worldcup_firebase_config');
+    let config = null;
+
     if (savedConfig) {
       try {
-        const config = JSON.parse(savedConfig);
-        if (config && config.apiKey && config.projectId) {
-          await this.enableFirebase(config);
-          console.log("Firebase mode enabled successfully.");
-          return;
-        }
+        config = JSON.parse(savedConfig);
       } catch (e) {
-        console.error("Failed to initialize Firebase from saved config:", e);
+        console.error("Failed to parse saved Firebase config:", e);
       }
     }
+
+    if (!config) {
+      config = DEFAULT_FIREBASE_CONFIG;
+    }
+
+    if (config && config.apiKey && config.projectId) {
+      try {
+        await this.enableFirebase(config, false); // false = do not overwrite custom storage config
+        console.log("Firebase mode enabled successfully with global/default configuration.");
+        return;
+      } catch (e) {
+        console.error("Failed to initialize default Firebase config:", e);
+      }
+    }
+
     console.log("LocalStorage mode active.");
   }
 
   /**
    * Dynamic loading of Firebase SDK from CDN and initialization.
    */
-  async enableFirebase(config) {
+  async enableFirebase(config, saveToLocalStorage = true) {
     if (this.isFirebase) return true;
 
     try {
@@ -52,8 +82,13 @@ export class AppDB {
       this.firestore = firestoreModule.getFirestore(this.firebaseApp);
       this.isFirebase = true;
 
-      // Save config to local storage for persistence
-      localStorage.setItem('worldcup_firebase_config', JSON.stringify(config));
+      // Clear the local override flag
+      localStorage.removeItem('wc_use_local_storage');
+
+      if (saveToLocalStorage) {
+        // Save custom config to local storage for persistence
+        localStorage.setItem('worldcup_firebase_config', JSON.stringify(config));
+      }
 
       // Trigger standard listeners if any are active
       Object.keys(this.listeners).forEach(roomCode => {
@@ -76,6 +111,7 @@ export class AppDB {
     this.firestore = null;
     this.firebaseApp = null;
     localStorage.removeItem('worldcup_firebase_config');
+    localStorage.setItem('wc_use_local_storage', 'true');
     console.log("Switched back to LocalStorage mode.");
   }
 
@@ -84,7 +120,7 @@ export class AppDB {
    */
   getFirebaseConfig() {
     const savedConfig = localStorage.getItem('worldcup_firebase_config');
-    return savedConfig ? JSON.parse(savedConfig) : null;
+    return savedConfig ? JSON.parse(savedConfig) : DEFAULT_FIREBASE_CONFIG;
   }
 
   // ==========================================
