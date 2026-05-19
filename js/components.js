@@ -613,8 +613,45 @@ export class UIComponents {
             </div>
             <button type="submit" class="btn btn-cyan btn-sm btn-bet-save">Zapisz typ</button>
           </form>
+          <div class="saved-bet-info">
+            <span class="label">Zapisany typ:</span>
+            <span class="value">${pred ? `${pred.home} - ${pred.away}` : '<span class="text-warning">brak ❌</span>'}</span>
+          </div>
         `;
       }
+
+      // Filter out the current user to get other players (friends)
+      const friends = (room.members || []).filter(member => member !== currentUser);
+
+      const friendsBetsHtml = friends.length === 0
+        ? '<div class="friends-bets-empty">Brak innych znajomych w tym pokoju.</div>'
+        : `<div class="friends-bets-list">
+            ${friends.map(friend => {
+              const fPred = (room.predictions[friend] || {})[match.id];
+              let statusText = '';
+              let statusClass = '';
+
+              if (fPred) {
+                if (isLocked) {
+                  statusText = `${fPred.home} - ${fPred.away}`;
+                  statusClass = 'friend-bet-scored';
+                } else {
+                  statusText = 'obstawiono 🔒';
+                  statusClass = 'friend-bet-saved';
+                }
+              } else {
+                statusText = 'nie obstawiono ❌';
+                statusClass = 'friend-bet-empty';
+              }
+
+              return `
+                <div class="friend-bet-item ${statusClass}">
+                  <span class="friend-name">${friend}</span>
+                  <span class="friend-status">${statusText}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>`;
 
       return `
         <div class="match-card glass-card hover-lift">
@@ -644,6 +681,11 @@ export class UIComponents {
             </div>
 
             ${pointsBadge}
+
+            <div class="friends-bets-section">
+              <div class="friends-bets-title">Typy znajomych:</div>
+              ${friendsBetsHtml}
+            </div>
           </div>
         </div>
       `;
