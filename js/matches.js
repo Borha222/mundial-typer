@@ -299,3 +299,26 @@ export function getTournamentStartTime() {
   const times = MATCHES.map(m => new Date(m.startTime).getTime());
   return new Date(Math.min(...times));
 }
+
+/**
+ * Resolves a country code (either 2-letter or 3-letter) to its TEAMS entry.
+ * Supports legacy 2-letter codes stored in existing rooms.
+ */
+export function findTeamById(id) {
+  if (!id) return null;
+  const upperId = id.toUpperCase();
+  const codeMapping = {
+    'KR': 'KOR', 'MX': 'MEX', 'ZA': 'RSA', 'CZ': 'CZE', 'CA': 'CAN',
+    'BA': 'BIH', 'QA': 'QAT', 'CH': 'SUI', 'BR': 'BRA', 'MA': 'MAR',
+    'HT': 'HAI', 'US': 'USA', 'PY': 'PAR', 'TR': 'TUR', 'AU': 'AUS',
+    'DE': 'GER', 'CW': 'CUW', 'CI': 'CIV', 'EC': 'ECU', 'NL': 'NED',
+    'JP': 'JPN', 'SE': 'SWE', 'TN': 'TUN', 'BE': 'BEL', 'EG': 'EGY',
+    'IR': 'IRN', 'NZ': 'NZL', 'ES': 'ESP', 'CV': 'CPV', 'SA': 'KSA',
+    'UY': 'URU', 'FR': 'FRA', 'SN': 'SEN', 'IQ': 'IRQ', 'NO': 'NOR',
+    'AR': 'ARG', 'DZ': 'ALG', 'AT': 'AUT', 'JO': 'JOR', 'PT': 'POR',
+    'CD': 'COD', 'UZ': 'UZB', 'CO': 'COL', 'GB': 'ENG', 'HR': 'CRO',
+    'GH': 'GHA', 'PA': 'PAN', 'PL': 'POL'
+  };
+  const resolvedId = codeMapping[upperId] || upperId;
+  return TEAMS.find(x => x.id === resolvedId) || null;
+}

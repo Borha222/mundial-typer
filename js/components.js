@@ -4,8 +4,8 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES } from './matches.js';
-import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js';
+import { TEAMS, PLAYERS, MATCHES, findTeamById } from './matches.js?v=2';
+import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=2';
 
 export class UIComponents {
   constructor(app) {
@@ -469,7 +469,7 @@ export class UIComponents {
 
                         const getTeamNameAndFlag = (id) => {
                           if (!id) return '';
-                          const t = TEAMS.find(x => x.id === id);
+                          const t = findTeamById(id);
                           return t ? `${t.flag} ${t.name}` : id;
                         };
 
@@ -721,7 +721,7 @@ export class UIComponents {
     if (isLocked) {
       // TOURNAMENT HAS STARTED - LOCK SELECTIONS
       const getTeamDisplay = (id) => {
-        const t = TEAMS.find(x => x.id === id);
+        const t = findTeamById(id);
         return t ? `${t.flag} ${t.name}` : `<span class="text-muted">Brak wyboru</span>`;
       };
 
@@ -894,10 +894,10 @@ export class UIComponents {
     // Populate values if they exist
     if (!isLocked) {
       const form = container.querySelector('#special-predictions-form');
-      if (userSpecial.top1) form.querySelector('#spec-top1').value = userSpecial.top1;
-      if (userSpecial.top2) form.querySelector('#spec-top2').value = userSpecial.top2;
-      if (userSpecial.top3) form.querySelector('#spec-top3').value = userSpecial.top3;
-      if (userSpecial.top4) form.querySelector('#spec-top4').value = userSpecial.top4;
+      if (userSpecial.top1) form.querySelector('#spec-top1').value = findTeamById(userSpecial.top1)?.id || userSpecial.top1;
+      if (userSpecial.top2) form.querySelector('#spec-top2').value = findTeamById(userSpecial.top2)?.id || userSpecial.top2;
+      if (userSpecial.top3) form.querySelector('#spec-top3').value = findTeamById(userSpecial.top3)?.id || userSpecial.top3;
+      if (userSpecial.top4) form.querySelector('#spec-top4').value = findTeamById(userSpecial.top4)?.id || userSpecial.top4;
       if (userSpecial.goldenBoot) form.querySelector('#spec-boot').value = userSpecial.goldenBoot;
       if (userSpecial.assists) form.querySelector('#spec-assists').value = userSpecial.assists;
 
@@ -1196,10 +1196,10 @@ export class UIComponents {
     // Populate special prediction fields if they are already resolved
     const res = room.results || {};
     const specialsForm = container.querySelector('#admin-specials-form');
-    if (res.top1) specialsForm.querySelector('#admin-top1').value = res.top1;
-    if (res.top2) specialsForm.querySelector('#admin-top2').value = res.top2;
-    if (res.top3) specialsForm.querySelector('#admin-top3').value = res.top3;
-    if (res.top4) specialsForm.querySelector('#admin-top4').value = res.top4;
+    if (res.top1) specialsForm.querySelector('#admin-top1').value = findTeamById(res.top1)?.id || res.top1;
+    if (res.top2) specialsForm.querySelector('#admin-top2').value = findTeamById(res.top2)?.id || res.top2;
+    if (res.top3) specialsForm.querySelector('#admin-top3').value = findTeamById(res.top3)?.id || res.top3;
+    if (res.top4) specialsForm.querySelector('#admin-top4').value = findTeamById(res.top4)?.id || res.top4;
     if (res.goldenBoot) specialsForm.querySelector('#admin-boot').value = res.goldenBoot;
     if (res.assists) specialsForm.querySelector('#admin-assists').value = res.assists;
 
