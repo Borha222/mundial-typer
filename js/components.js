@@ -632,13 +632,8 @@ export class UIComponents {
               let statusClass = '';
 
               if (fPred) {
-                if (isLocked) {
-                  statusText = `${fPred.home} - ${fPred.away}`;
-                  statusClass = 'friend-bet-scored';
-                } else {
-                  statusText = 'obstawiono 🔒';
-                  statusClass = 'friend-bet-saved';
-                }
+                statusText = `${fPred.home} - ${fPred.away}`;
+                statusClass = isLocked ? 'friend-bet-scored' : 'friend-bet-saved';
               } else {
                 statusText = 'nie obstawiono ❌';
                 statusClass = 'friend-bet-empty';
