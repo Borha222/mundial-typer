@@ -4,7 +4,7 @@
  * Provides sorted room leaderboard with tie-breakers.
  */
 
-import { MATCHES } from './matches.js?v=6';
+import { MATCHES } from './matches.js?v=8';
 
 /**
  * Calculates points for a single match prediction.

@@ -489,6 +489,96 @@ export class AppDB {
   }
 
   /**
+   * Kicks/removes a user from a room.
+   * Only the room owner is allowed to do this.
+   */
+  async kickMember(roomCode, targetUsername) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) throw new Error("Musisz być zalogowany!");
+
+    if (this.isFirebase) {
+      try {
+        const firestoreModule = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js');
+        const roomDocRef = firestoreModule.doc(this.firestore, 'rooms', roomCode);
+        const roomDoc = await firestoreModule.getDoc(roomDocRef);
+
+        if (!roomDoc.exists()) {
+          throw new Error("Nie znaleziono pokoju o podanym kodzie!");
+        }
+
+        const roomData = roomDoc.data();
+        if (roomData.owner !== currentUser) {
+          throw new Error("Tylko administrator (właściciel) może usuwać członków!");
+        }
+        if (targetUsername === roomData.owner) {
+          throw new Error("Nie możesz usunąć samego siebie (właściciela)!");
+        }
+
+        // Remove from members
+        roomData.members = roomData.members.filter(m => m !== targetUsername);
+        
+        // Clean up predictions
+        if (roomData.predictions && roomData.predictions[targetUsername]) {
+          delete roomData.predictions[targetUsername];
+        }
+        if (roomData.specialPredictions && roomData.specialPredictions[targetUsername]) {
+          delete roomData.specialPredictions[targetUsername];
+        }
+
+        await firestoreModule.setDoc(roomDocRef, roomData);
+
+        // Remove room from target user's joinedRooms
+        const userDocRef = firestoreModule.doc(this.firestore, 'users', targetUsername);
+        const userDoc = await firestoreModule.getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          userData.joinedRooms = (userData.joinedRooms || []).filter(code => code !== roomCode);
+          await firestoreModule.updateDoc(userDocRef, { joinedRooms: userData.joinedRooms });
+        }
+        
+        return roomData;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    } else {
+      // LocalStorage Mode
+      const rooms = JSON.parse(localStorage.getItem('wc_rooms') || '{}');
+      const room = rooms[roomCode];
+
+      if (!room) {
+        throw new Error("Nie znaleziono pokoju!");
+      }
+
+      if (room.owner !== currentUser) {
+        throw new Error("Tylko administrator (właściciel) może usuwać członków!");
+      }
+      if (targetUsername === room.owner) {
+        throw new Error("Nie możesz usunąć samego siebie (właściciela)!");
+      }
+
+      room.members = room.members.filter(m => m !== targetUsername);
+      
+      if (room.predictions && room.predictions[targetUsername]) {
+        delete room.predictions[targetUsername];
+      }
+      if (room.specialPredictions && room.specialPredictions[targetUsername]) {
+        delete room.specialPredictions[targetUsername];
+      }
+
+      rooms[roomCode] = room;
+      localStorage.setItem('wc_rooms', JSON.stringify(rooms));
+
+      const users = JSON.parse(localStorage.getItem('wc_users') || '{}');
+      if (users[targetUsername]) {
+        users[targetUsername].joinedRooms = (users[targetUsername].joinedRooms || []).filter(code => code !== roomCode);
+        localStorage.setItem('wc_users', JSON.stringify(users));
+      }
+
+      return room;
+    }
+  }
+
+  /**
    * Set active room.
    */
   setActiveRoomCode(roomCode) {

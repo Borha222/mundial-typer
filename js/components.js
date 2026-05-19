@@ -4,13 +4,15 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=6';
-import { calculateRoomLeaderboard, calculateMatchPoints, calculateGroupStandings } from './scoring.js?v=6';
+import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=8';
+import { calculateRoomLeaderboard, calculateMatchPoints, calculateGroupStandings } from './scoring.js?v=8';
 
 export class UIComponents {
   constructor(app) {
     this.app = app;
     this.expandedUsers = new Set();
+    const savedHideCompleted = localStorage.getItem('hideCompleted');
+    this.hideCompleted = savedHideCompleted !== null ? savedHideCompleted === 'true' : true;
   }
 
   /**
@@ -552,7 +554,23 @@ export class UIComponents {
     const userPredictions = room.predictions[currentUser] || {};
     const matchScores = room.matchScores || {};
 
-    const matchesHtml = MATCHES.map(match => {
+    // Filter matches if hideCompleted is active
+    let filteredMatches = MATCHES;
+    if (this.hideCompleted) {
+      filteredMatches = MATCHES.filter(match => {
+        const actualScore = matchScores[match.id];
+        const isFinished = actualScore && actualScore.home !== undefined;
+        return !isFinished;
+      });
+    }
+
+    const matchesHtml = filteredMatches.length === 0
+      ? `<div class="matches-empty-state glass-card">
+          <div class="matches-empty-icon">⚽</div>
+          <div class="matches-empty-title">Brak meczy do wyświetlenia</div>
+          <div class="matches-empty-desc">Wszystkie mecze w tej grupie zostały już zakończone i uzupełnione. Odznacz opcję "Ukryj zakończone mecze" na górze, aby je wyświetlić.</div>
+        </div>`
+      : filteredMatches.map(match => {
       const matchTime = new Date(match.startTime);
       const isLocked = virtualTime >= matchTime;
       const pred = userPredictions[match.id];
@@ -696,6 +714,14 @@ export class UIComponents {
           <p>Możesz swobodnie zmieniać swoje typy aż do oficjalnej godziny rozpoczęcia poszczególnych spotkań. Dokładny wynik to <strong>5 punktów</strong>, a samo trafienie zwycięzcy lub remisu to <strong>3 punkty</strong>.</p>
         </div>
         
+        <div class="matches-filter-bar glass-card">
+          <label class="filter-toggle">
+            <input type="checkbox" id="hide-completed-checkbox" ${this.hideCompleted ? 'checked' : ''}>
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Ukryj zakończone mecze</span>
+          </label>
+        </div>
+
         <div class="matches-grid">
           ${matchesHtml}
         </div>
@@ -703,6 +729,16 @@ export class UIComponents {
         <div id="bet-save-toast" class="toast hidden">Pomyślnie zapisano typ! ✓</div>
       </div>
     `;
+
+    // Bind filter checkbox event
+    const filterCheckbox = container.querySelector('#hide-completed-checkbox');
+    if (filterCheckbox) {
+      filterCheckbox.addEventListener('change', (e) => {
+        this.hideCompleted = e.target.checked;
+        localStorage.setItem('hideCompleted', this.hideCompleted);
+        this.renderTabMatches(container, room);
+      });
+    }
 
     // Bind save events
     container.querySelectorAll('.match-bet-form').forEach(form => {
@@ -1240,6 +1276,35 @@ export class UIComponents {
           </div>
         </div>
 
+        <!-- SECTION 5: ROOM MEMBERS MANAGEMENT -->
+        <div class="admin-section glass-card">
+          <div class="admin-section-header">
+            <span class="section-icon">👥</span>
+            <div>
+              <h3>Zarządzanie Członkami Pokoju</h3>
+              <p>Usuwaj graczy z tego pokoju. Usunięcie użytkownika wykluczy go z pokoju oraz skasuje jego typy.</p>
+            </div>
+          </div>
+          
+          <div class="admin-members-list">
+            ${room.members.map(member => {
+              const isSelf = member === room.owner;
+              return `
+                <div class="admin-member-row glass">
+                  <div class="member-info">
+                    <span class="member-name">${member} ${isSelf ? '<span class="badge badge-primary">Właściciel (Host)</span>' : ''}</span>
+                  </div>
+                  ${!isSelf ? `
+                    <button class="btn btn-sm btn-danger btn-kick-member" data-username="${member}">
+                      Usuń z pokoju ❌
+                    </button>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
       </div>
     `;
 
@@ -1371,5 +1436,24 @@ export class UIComponents {
         }
       });
     }
+
+    // Bind kick member button events
+    container.querySelectorAll('.btn-kick-member').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const username = btn.getAttribute('data-username');
+        if (confirm(`Czy na pewno chcesz usunąć użytkownika ${username} z tego pokoju? Usunięcie jest bezpowrotne i wyczyści jego typy.`)) {
+          btn.disabled = true;
+          btn.textContent = 'Usuwanie...';
+          try {
+            await this.app.db.kickMember(room.code, username);
+            alert(`Użytkownik ${username} został pomyślnie usunięty.`);
+          } catch (err) {
+            alert("Błąd usuwania członka: " + err.message);
+            btn.disabled = false;
+            btn.textContent = 'Usuń z pokoju ❌';
+          }
+        }
+      });
+    });
   }
 }

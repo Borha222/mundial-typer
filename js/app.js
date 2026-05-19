@@ -4,8 +4,8 @@
  * and maintains active real-time data subscriptions.
  */
 
-import { AppDB } from './db.js?v=6';
-import { UIComponents } from './components.js?v=6';
+import { AppDB } from './db.js?v=8';
+import { UIComponents } from './components.js?v=8';
 
 class App {
   constructor() {
@@ -53,6 +53,15 @@ class App {
       this.activeSubscriptionUnsubscribe = await this.db.subscribeToRoom(
         activeRoomCode,
         (roomData) => {
+          // Check if current user was kicked
+          if (!roomData.members.includes(username)) {
+            alert("Zostałeś usunięty z tego pokoju przez administratora!");
+            this.clearRoomSubscription();
+            localStorage.removeItem('wc_active_room_code');
+            this.initApp();
+            return;
+          }
+
           this.currentRoomData = roomData;
           
           // Check if dashboard layout has already been rendered.
