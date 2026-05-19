@@ -4,8 +4,8 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES, findTeamById } from './matches.js?v=2';
-import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=2';
+import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=3';
+import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=3';
 
 export class UIComponents {
   constructor(app) {
@@ -427,7 +427,7 @@ export class UIComponents {
 
                         return `
                           <div class="bet-compact-item">
-                            <span class="match-teams-compact">${match.homeFlag} ${match.homeName} vs ${match.awayFlag} ${match.awayName}</span>
+                            <span class="match-teams-compact">${getTeamFlagHtml(match.home)} ${match.homeName} vs ${getTeamFlagHtml(match.away)} ${match.awayName}</span>
                             <span class="match-pred-compact">Typ: <strong>${predText}</strong></span>
                             <span class="match-act-compact">Wynik: <strong>${actText}</strong></span>
                             ${pointsAwarded}
@@ -470,7 +470,7 @@ export class UIComponents {
                         const getTeamNameAndFlag = (id) => {
                           if (!id) return '';
                           const t = findTeamById(id);
-                          return t ? `${t.flag} ${t.name}` : id;
+                          return t ? `${getTeamFlagHtml(t.id)} ${t.name}` : id;
                         };
 
                         return `
@@ -627,14 +627,14 @@ export class UIComponents {
           <div class="match-card-body">
             <div class="teams-container">
               <div class="team team-home">
-                <span class="flag-giant">${match.homeFlag}</span>
+                <span class="flag-giant">${getTeamFlagHtml(match.home)}</span>
                 <span class="team-name">${match.homeName}</span>
               </div>
               
               <div class="vs-badge">VS</div>
               
               <div class="team team-away">
-                <span class="flag-giant">${match.awayFlag}</span>
+                <span class="flag-giant">${getTeamFlagHtml(match.away)}</span>
                 <span class="team-name">${match.awayName}</span>
               </div>
             </div>
@@ -722,7 +722,7 @@ export class UIComponents {
       // TOURNAMENT HAS STARTED - LOCK SELECTIONS
       const getTeamDisplay = (id) => {
         const t = findTeamById(id);
-        return t ? `${t.flag} ${t.name}` : `<span class="text-muted">Brak wyboru</span>`;
+        return t ? `${getTeamFlagHtml(t.id)} ${t.name}` : `<span class="text-muted">Brak wyboru</span>`;
       };
 
       const getPointsBadge = (predVal, resVal, points) => {
@@ -807,7 +807,7 @@ export class UIComponents {
       `;
     } else {
       // TOURNAMENT HAS NOT STARTED - EDITABLE SELECTIONS
-      const teamOptions = TEAMS.map(t => `<option value="${t.id}">${t.flag} ${t.name}</option>`).join('');
+      const teamOptions = TEAMS.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
       const playerOptions = PLAYERS.map(p => `<option value="${p}">${p}</option>`).join('');
 
       formContent = `
@@ -946,7 +946,7 @@ export class UIComponents {
    * Tab 4: Admin Panel / Game Simulator Component
    */
   renderTabAdmin(container, room) {
-    const teamOptions = TEAMS.map(t => `<option value="${t.id}">${t.flag} ${t.name}</option>`).join('');
+    const teamOptions = TEAMS.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
     const playerOptions = PLAYERS.map(p => `<option value="${p}">${p}</option>`).join('');
     
     const savedFirebaseConfig = this.app.db.getFirebaseConfig();
@@ -1009,7 +1009,7 @@ export class UIComponents {
                 <div class="admin-match-row glass ${isMatchPlayed ? 'match-played-row' : ''}">
                   <div class="match-info">
                     <span class="stage">${match.stage}</span>
-                    <span class="teams">${match.homeFlag} ${match.homeName} vs ${match.awayFlag} ${match.awayName}</span>
+                    <span class="teams">${getTeamFlagHtml(match.home)} ${match.homeName} vs ${getTeamFlagHtml(match.away)} ${match.awayName}</span>
                     <span class="time">Start: ${this.formatDate(match.startTime)}</span>
                   </div>
                   

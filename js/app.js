@@ -4,8 +4,8 @@
  * and maintains active real-time data subscriptions.
  */
 
-import { AppDB } from './db.js?v=2';
-import { UIComponents } from './components.js?v=2';
+import { AppDB } from './db.js?v=3';
+import { UIComponents } from './components.js?v=3';
 
 class App {
   constructor() {

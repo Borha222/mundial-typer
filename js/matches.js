@@ -322,3 +322,41 @@ export function findTeamById(id) {
   const resolvedId = codeMapping[upperId] || upperId;
   return TEAMS.find(x => x.id === resolvedId) || null;
 }
+
+/**
+ * Returns a markup string for rendering a country flag via SVG flag-icons.
+ * This is robust across all platforms (including Windows which does not support emoji flags).
+ */
+export function getTeamFlagHtml(teamId) {
+  const team = findTeamById(teamId);
+  if (!team) return '';
+  
+  // Custom mapping for subdivisions like Scotland and England in flag-icons
+  const customSubdivisions = {
+    'SCO': 'gb-sct',
+    'ENG': 'gb-eng'
+  };
+  
+  const id = team.id.toUpperCase();
+  let code = '';
+  if (customSubdivisions[id]) {
+    code = customSubdivisions[id];
+  } else {
+    // Reverse lookup from 3-letter to 2-letter
+    const reverseMapping = {
+      'KOR': 'kr', 'MEX': 'mx', 'RSA': 'za', 'CZE': 'cz', 'CAN': 'ca',
+      'BIH': 'ba', 'QAT': 'qa', 'SUI': 'ch', 'BRA': 'br', 'MAR': 'ma',
+      'HAI': 'ht', 'USA': 'us', 'PAR': 'py', 'TUR': 'tr', 'AUS': 'au',
+      'GER': 'de', 'CUW': 'cw', 'CIV': 'ci', 'ECU': 'ec', 'NED': 'nl',
+      'JPN': 'jp', 'SWE': 'se', 'TUN': 'tn', 'BEL': 'be', 'EGY': 'eg',
+      'IRN': 'ir', 'NZL': 'nz', 'ESP': 'es', 'CPV': 'cv', 'KSA': 'sa',
+      'URU': 'uy', 'FRA': 'fr', 'SEN': 'sn', 'IRQ': 'iq', 'NOR': 'no',
+      'ARG': 'ar', 'ALG': 'dz', 'AUT': 'at', 'JOR': 'jo', 'POR': 'pt',
+      'COD': 'cd', 'UZB': 'uz', 'COL': 'co', 'CRO': 'hr', 'GHA': 'gh',
+      'PAN': 'pa', 'POL': 'pl'
+    };
+    code = reverseMapping[id] || id.slice(0, 2).toLowerCase();
+  }
+  
+  return `<span class="fi fi-${code} flag-icon-rounded"></span>`;
+}

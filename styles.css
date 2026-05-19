@@ -1338,3 +1338,29 @@ input:focus, select:focus, textarea:focus {
 .fade-in {
   animation: fadeIn 0.4s ease-out;
 }
+
+/* ==========================================
+   FLAG ICONS STYLING
+   ========================================== */
+.flag-icon-rounded {
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  display: inline-block;
+  width: 1.40em;
+  height: 1.05em;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.flag-giant .flag-icon-rounded {
+  width: 2.2em;
+  height: 1.6em;
+  border-radius: 6px;
+  margin-right: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
