@@ -90,6 +90,9 @@ export class AppDB {
         localStorage.setItem('worldcup_firebase_config', JSON.stringify(config));
       }
 
+      // Run local storage migration to Firestore
+      await this.migrateLocalDataToFirebase();
+
       // Trigger standard listeners if any are active
       Object.keys(this.listeners).forEach(roomCode => {
         this.subscribeToRoom(roomCode, this.listeners[roomCode]);
@@ -121,6 +124,73 @@ export class AppDB {
   getFirebaseConfig() {
     const savedConfig = localStorage.getItem('worldcup_firebase_config');
     return savedConfig ? JSON.parse(savedConfig) : DEFAULT_FIREBASE_CONFIG;
+  }
+
+  /**
+   * Migrates all users and rooms from LocalStorage to Firebase Firestore.
+   * Runs transparently and merges data when necessary.
+   */
+  async migrateLocalDataToFirebase() {
+    if (!this.isFirebase || !this.firestore) return;
+
+    try {
+      const firestoreModule = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js');
+      console.log("Starting data migration from LocalStorage to Firebase Firestore...");
+
+      // 1. Migrate Users
+      const localUsers = JSON.parse(localStorage.getItem('wc_users') || '{}');
+      for (const username of Object.keys(localUsers)) {
+        const uData = localUsers[username];
+        const userDocRef = firestoreModule.doc(this.firestore, 'users', username);
+        const userDoc = await firestoreModule.getDoc(userDocRef);
+
+        if (!userDoc.exists()) {
+          console.log(`Migrating user: ${username} to Firestore...`);
+          await firestoreModule.setDoc(userDocRef, {
+            username: username,
+            email: uData.email || '',
+            password: uData.password || '',
+            joinedRooms: uData.joinedRooms || [],
+            createdAt: uData.createdAt || new Date().toISOString()
+          });
+        } else {
+          // Merge joined rooms if they exist locally but not in DB
+          const userData = userDoc.data();
+          const dbRooms = userData.joinedRooms || [];
+          const localRooms = uData.joinedRooms || [];
+          let updated = false;
+
+          localRooms.forEach(code => {
+            if (!dbRooms.includes(code)) {
+              dbRooms.push(code);
+              updated = true;
+            }
+          });
+
+          if (updated) {
+            console.log(`Merging joined rooms for user: ${username} in Firestore...`);
+            await firestoreModule.updateDoc(userDocRef, { joinedRooms: dbRooms });
+          }
+        }
+      }
+
+      // 2. Migrate Rooms
+      const localRooms = JSON.parse(localStorage.getItem('wc_rooms') || '{}');
+      for (const roomCode of Object.keys(localRooms)) {
+        const rData = localRooms[roomCode];
+        const roomDocRef = firestoreModule.doc(this.firestore, 'rooms', roomCode);
+        const roomDoc = await firestoreModule.getDoc(roomDocRef);
+
+        if (!roomDoc.exists()) {
+          console.log(`Migrating room: ${roomCode} to Firestore...`);
+          await firestoreModule.setDoc(roomDocRef, rData);
+        }
+      }
+
+      console.log("Migration finished successfully.");
+    } catch (e) {
+      console.error("Migration to Firebase failed:", e);
+    }
   }
 
   // ==========================================
@@ -298,6 +368,18 @@ export class AppDB {
             joinedRooms.push(roomCode);
             await firestoreModule.updateDoc(userDocRef, { joinedRooms });
           }
+        } else {
+          // Create a new user doc in Firestore using their local credentials if available
+          const users = JSON.parse(localStorage.getItem('wc_users') || '{}');
+          const localUser = users[username] || {};
+          const userData = {
+            username: username,
+            email: localUser.email || '',
+            password: localUser.password || '',
+            joinedRooms: [roomCode],
+            createdAt: localUser.createdAt || new Date().toISOString()
+          };
+          await firestoreModule.setDoc(userDocRef, userData);
         }
 
         this.setActiveRoomCode(roomCode);
@@ -358,6 +440,18 @@ export class AppDB {
             joinedRooms.push(roomCode);
             await firestoreModule.updateDoc(userDocRef, { joinedRooms });
           }
+        } else {
+          // Create a new user doc in Firestore using their local credentials if available
+          const users = JSON.parse(localStorage.getItem('wc_users') || '{}');
+          const localUser = users[username] || {};
+          const userData = {
+            username: username,
+            email: localUser.email || '',
+            password: localUser.password || '',
+            joinedRooms: [roomCode],
+            createdAt: localUser.createdAt || new Date().toISOString()
+          };
+          await firestoreModule.setDoc(userDocRef, userData);
         }
 
         this.setActiveRoomCode(roomCode);
