@@ -1,27 +1,66 @@
 /**
  * World Cup Matches and Teams Metadata
  * Holds the schedule of pre-populated group matches, team lists, and player suggestions.
- * All time stamps are in June 2026.
+ * All times are in Europe/Warsaw timezone (June 2026).
  */
 
 export const TEAMS = [
   { id: 'MEX', name: 'Meksyk', flag: '🇲🇽' },
   { id: 'RSA', name: 'RPA', flag: '🇿🇦' },
+  { id: 'KOR', name: 'Korea Południowa', flag: '🇰🇷' },
+  { id: 'CZE', name: 'Czechy', flag: '🇨🇿' },
   { id: 'CAN', name: 'Kanada', flag: '🇨🇦' },
+  { id: 'BIH', name: 'Bośnia i Hercegowina', flag: '🇧🇦' },
+  { id: 'QAT', name: 'Katar', flag: '🇶🇦' },
+  { id: 'SUI', name: 'Szwajcaria', flag: '🇨🇭' },
+  { id: 'BRA', name: 'Brazylia', flag: '🇧🇷' },
   { id: 'MAR', name: 'Maroko', flag: '🇲🇦' },
+  { id: 'HAI', name: 'Haiti', flag: '🇭🇹' },
+  { id: 'SCO', name: 'Szkocja', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
   { id: 'USA', name: 'USA', flag: '🇺🇸' },
   { id: 'PAR', name: 'Paragwaj', flag: '🇵🇾' },
-  { id: 'ARG', name: 'Argentyna', flag: '🇦🇷' },
-  { id: 'FRA', name: 'Francja', flag: '🇫🇷' },
-  { id: 'ESP', name: 'Hiszpania', flag: '🇪🇸' },
-  { id: 'CRO', name: 'Chorwacja', flag: '🇭🇷' },
+  { id: 'TUR', name: 'Turcja', flag: '🇹🇷' },
+  { id: 'AUS', name: 'Australia', flag: '🇦🇺' },
   { id: 'GER', name: 'Niemcy', flag: '🇩🇪' },
-  { id: 'POL', name: 'Polska', flag: '🇵🇱' },
-  { id: 'BRA', name: 'Brazylia', flag: '🇧🇷' },
+  { id: 'CUW', name: 'Curaçao', flag: '🇨🇼' },
+  { id: 'CIV', name: 'Wybrzeże Kości Słoniowej', flag: '🇨🇮' },
+  { id: 'ECU', name: 'Ekwador', flag: '🇪🇨' },
+  { id: 'NED', name: 'Holandia', flag: '🇳🇱' },
+  { id: 'JPN', name: 'Japonia', flag: '🇯🇵' },
+  { id: 'SWE', name: 'Szwecja', flag: '🇸🇪' },
+  { id: 'TUN', name: 'Tunezja', flag: '🇹🇳' },
+  { id: 'BEL', name: 'Belgia', flag: '🇧🇪' },
+  { id: 'EGY', name: 'Egipt', flag: '🇪🇬' },
+  { id: 'IRN', name: 'Iran', flag: '🇮🇷' },
+  { id: 'NZL', name: 'Nowa Zelandia', flag: '🇳🇿' },
+  { id: 'ESP', name: 'Hiszpania', flag: '🇪🇸' },
+  { id: 'CPV', name: 'Wyspy Zielonego Przylądka', flag: '🇨🇻' },
+  { id: 'KSA', name: 'Arabia Saudyjska', flag: '🇸🇦' },
+  { id: 'URU', name: 'Urugwaj', flag: '🇺🇾' },
+  { id: 'FRA', name: 'Francja', flag: '🇫🇷' },
   { id: 'SEN', name: 'Senegal', flag: '🇸🇳' },
-  { id: 'ENG', name: 'Anglia', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-  { id: 'NED', name: 'Holandia', flag: '🇳🇱' }
+  { id: 'IRQ', name: 'Irak', flag: '🇮🇶' },
+  { id: 'NOR', name: 'Norwegia', flag: '🇳🇴' },
+  { id: 'ARG', name: 'Argentyna', flag: '🇦🇷' },
+  { id: 'ALG', name: 'Algieria', flag: '🇩🇿' },
+  { id: 'AUT', name: 'Austria', flag: '🇦🇹' },
+  { id: 'JOR', name: 'Jordania', flag: '🇯🇴' },
+  { id: 'POR', name: 'Portugalia', flag: '🇵🇹' },
+  { id: 'COD', name: 'DR Kongo', flag: '🇨🇩' },
+  { id: 'UZB', name: 'Uzbekistan', flag: '🇺🇿' },
+  { id: 'COL', name: 'Kolumbia', flag: '🇨🇴' },
+  { id: 'ENG', name: 'Anglia', flag: '🏴󠁧󠁢󠁥󠁮%e2%80%8d%e2%9c%8d%ef%b8%8f' }, // Fallback to direct flag
+  { id: 'CRO', name: 'Chorwacja', flag: '🇭🇷' },
+  { id: 'GHA', name: 'Ghana', flag: '🇬🇭' },
+  { id: 'PAN', name: 'Panama', flag: '🇵🇦' },
+  { id: 'POL', name: 'Polska', flag: '🇵🇱' }
 ];
+
+// Correct flags for all teams
+TEAMS.forEach(team => {
+  if (team.id === 'ENG') team.flag = '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
+  if (team.id === 'SCO') team.flag = '🏴󠁧󠁢󠁳󠁣󠁴󠁿';
+});
 
 export const PLAYERS = [
   'Robert Lewandowski',
@@ -49,22 +88,33 @@ export const MATCHES = [
     awayName: 'RPA',
     homeFlag: '🇲🇽',
     awayFlag: '🇿🇦',
-    startTime: '2026-06-11T17:00:00', // Tournament Opening
+    startTime: '2026-06-11T17:00:00', // Opening Match
     stage: 'Grupa A - Mecz Otwarcia'
   },
   {
     id: 'm2',
+    home: 'KOR',
+    away: 'CZE',
+    homeName: 'Korea Południowa',
+    awayName: 'Czechy',
+    homeFlag: '🇰🇷',
+    awayFlag: '🇨🇿',
+    startTime: '2026-06-11T20:30:00',
+    stage: 'Grupa A'
+  },
+  {
+    id: 'm3',
     home: 'CAN',
-    away: 'MAR',
+    away: 'BIH',
     homeName: 'Kanada',
-    awayName: 'Maroko',
+    awayName: 'Bośnia i Hercegowina',
     homeFlag: '🇨🇦',
-    awayFlag: '🇲🇦',
+    awayFlag: '🇧🇦',
     startTime: '2026-06-12T15:00:00',
     stage: 'Grupa B'
   },
   {
-    id: 'm3',
+    id: 'm4',
     home: 'USA',
     away: 'PAR',
     homeName: 'USA',
@@ -72,62 +122,172 @@ export const MATCHES = [
     homeFlag: '🇺🇸',
     awayFlag: '🇵🇾',
     startTime: '2026-06-12T19:00:00',
-    stage: 'Grupa C'
-  },
-  {
-    id: 'm4',
-    home: 'ARG',
-    away: 'FRA',
-    homeName: 'Argentyna',
-    awayName: 'Francja',
-    homeFlag: '🇦🇷',
-    awayFlag: '🇫🇷',
-    startTime: '2026-06-13T14:00:00',
     stage: 'Grupa D'
   },
   {
     id: 'm5',
-    home: 'ESP',
-    away: 'CRO',
-    homeName: 'Hiszpania',
-    awayName: 'Chorwacja',
-    homeFlag: '🇪🇸',
-    awayFlag: '🇭🇷',
-    startTime: '2026-06-13T18:00:00',
-    stage: 'Grupa E'
+    home: 'QAT',
+    away: 'SUI',
+    homeName: 'Katar',
+    awayName: 'Szwajcaria',
+    homeFlag: '🇶🇦',
+    awayFlag: '🇨🇭',
+    startTime: '2026-06-13T13:00:00',
+    stage: 'Grupa B'
   },
   {
     id: 'm6',
-    home: 'GER',
-    away: 'POL',
-    homeName: 'Niemcy',
-    awayName: 'Polska',
-    homeFlag: '🇩🇪',
-    awayFlag: '🇵🇱',
-    startTime: '2026-06-14T15:00:00',
-    stage: 'Grupa F'
+    home: 'HAI',
+    away: 'SCO',
+    homeName: 'Haiti',
+    awayName: 'Szkocja',
+    homeFlag: '🇭🇹',
+    awayFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    startTime: '2026-06-13T16:00:00',
+    stage: 'Grupa C'
   },
   {
     id: 'm7',
     home: 'BRA',
-    away: 'SEN',
+    away: 'MAR',
     homeName: 'Brazylia',
-    awayName: 'Senegal',
+    awayName: 'Maroko',
     homeFlag: '🇧🇷',
-    awayFlag: '🇸🇳',
-    startTime: '2026-06-14T21:00:00',
-    stage: 'Grupa F'
+    awayFlag: '🇲🇦',
+    startTime: '2026-06-13T19:00:00',
+    stage: 'Grupa C'
   },
   {
     id: 'm8',
-    home: 'ENG',
-    away: 'NED',
-    homeName: 'Anglia',
-    awayName: 'Holandia',
-    homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    awayFlag: '🇳🇱',
-    startTime: '2026-06-15T18:00:00',
+    home: 'AUS',
+    away: 'TUR',
+    homeName: 'Australia',
+    awayName: 'Turcja',
+    homeFlag: '🇦🇺',
+    awayFlag: '🇹🇷',
+    startTime: '2026-06-13T22:00:00',
+    stage: 'Grupa D'
+  },
+  {
+    id: 'm9',
+    home: 'CIV',
+    away: 'ECU',
+    homeName: 'Wybrzeże Kości Słoniowej',
+    awayName: 'Ekwador',
+    homeFlag: '🇨🇮',
+    awayFlag: '🇪🇨',
+    startTime: '2026-06-14T13:00:00',
+    stage: 'Grupa E'
+  },
+  {
+    id: 'm10',
+    home: 'GER',
+    away: 'CUW',
+    homeName: 'Niemcy',
+    awayName: 'Curaçao',
+    homeFlag: '🇩🇪',
+    awayFlag: '🇨🇼',
+    startTime: '2026-06-14T16:00:00',
+    stage: 'Grupa E'
+  },
+  {
+    id: 'm11',
+    home: 'NED',
+    away: 'JPN',
+    homeName: 'Holandia',
+    awayName: 'Japonia',
+    homeFlag: '🇳🇱',
+    awayFlag: '🇯🇵',
+    startTime: '2026-06-14T19:00:00',
+    stage: 'Grupa F'
+  },
+  {
+    id: 'm12',
+    home: 'SWE',
+    away: 'TUN',
+    homeName: 'Szwecja',
+    awayName: 'Tunezja',
+    homeFlag: '🇸🇪',
+    awayFlag: '🇹🇳',
+    startTime: '2026-06-14T22:00:00',
+    stage: 'Grupa F'
+  },
+  {
+    id: 'm13',
+    home: 'BEL',
+    away: 'EGY',
+    homeName: 'Belgia',
+    awayName: 'Egipt',
+    homeFlag: '🇧🇪',
+    awayFlag: '🇪🇬',
+    startTime: '2026-06-15T13:00:00',
     stage: 'Grupa G'
+  },
+  {
+    id: 'm14',
+    home: 'ESP',
+    away: 'CPV',
+    homeName: 'Hiszpania',
+    awayName: 'Wyspy Zielonego Przylądka',
+    homeFlag: '🇪🇸',
+    awayFlag: '🇨🇻',
+    startTime: '2026-06-15T16:00:00',
+    stage: 'Grupa H'
+  },
+  {
+    id: 'm15',
+    home: 'IRN',
+    away: 'NZL',
+    homeName: 'Iran',
+    awayName: 'Nowa Zelandia',
+    homeFlag: '🇮🇷',
+    awayFlag: '🇳🇿',
+    startTime: '2026-06-15T19:00:00',
+    stage: 'Grupa G'
+  },
+  {
+    id: 'm16',
+    home: 'KSA',
+    away: 'URU',
+    homeName: 'Arabia Saudyjska',
+    awayName: 'Urugwaj',
+    homeFlag: '🇸🇦',
+    awayFlag: '🇺🇾',
+    startTime: '2026-06-15T22:00:00',
+    stage: 'Grupa H'
+  },
+  {
+    id: 'm17',
+    home: 'ARG',
+    away: 'ALG',
+    homeName: 'Argentyna',
+    awayName: 'Algieria',
+    homeFlag: '🇦🇷',
+    awayFlag: '🇩🇿',
+    startTime: '2026-06-16T15:00:00',
+    stage: 'Grupa J'
+  },
+  {
+    id: 'm18',
+    home: 'FRA',
+    away: 'SEN',
+    homeName: 'Francja',
+    awayName: 'Senegal',
+    homeFlag: '🇫🇷',
+    awayFlag: '🇸🇳',
+    startTime: '2026-06-16T18:00:00',
+    stage: 'Grupa I'
+  },
+  {
+    id: 'm19',
+    home: 'IRQ',
+    away: 'NOR',
+    homeName: 'Irak',
+    awayName: 'Norwegia',
+    homeFlag: '🇮🇶',
+    awayFlag: '🇳🇴',
+    startTime: '2026-06-16T21:00:00',
+    stage: 'Grupa I'
   }
 ];
 
