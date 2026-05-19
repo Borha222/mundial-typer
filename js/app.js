@@ -4,8 +4,8 @@
  * and maintains active real-time data subscriptions.
  */
 
-import { AppDB } from './db.js?v=4';
-import { UIComponents } from './components.js?v=4';
+import { AppDB } from './db.js?v=5';
+import { UIComponents } from './components.js?v=5';
 
 class App {
   constructor() {
@@ -67,7 +67,7 @@ class App {
             }
             const statusEl = dashboardHeader.querySelector('.clock-status');
             if (statusEl) {
-              const isStarted = new Date(roomData.virtualTime) >= new Date('2026-06-11T17:00:00');
+              const isStarted = new Date(roomData.virtualTime) >= new Date('2026-06-11T21:00:00');
               statusEl.innerHTML = isStarted 
                 ? '<span class="status-live">● MUNDIAL TRWA</span>' 
                 : '<span class="status-waiting">⏱ Przed Mundialem</span>';

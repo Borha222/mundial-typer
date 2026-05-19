@@ -88,7 +88,7 @@ export const MATCHES = [
     awayName: 'RPA',
     homeFlag: '🇲🇽',
     awayFlag: '🇿🇦',
-    startTime: '2026-06-11T17:00:00', // Opening Match
+    startTime: '2026-06-11T21:00:00', // Opening Match
     stage: 'Grupa A - Mecz Otwarcia'
   },
   {
@@ -99,7 +99,7 @@ export const MATCHES = [
     awayName: 'Czechy',
     homeFlag: '🇰🇷',
     awayFlag: '🇨🇿',
-    startTime: '2026-06-11T20:30:00',
+    startTime: '2026-06-12T04:00:00',
     stage: 'Grupa A'
   },
   {
@@ -110,7 +110,7 @@ export const MATCHES = [
     awayName: 'Bośnia i Hercegowina',
     homeFlag: '🇨🇦',
     awayFlag: '🇧🇦',
-    startTime: '2026-06-12T15:00:00',
+    startTime: '2026-06-12T21:00:00',
     stage: 'Grupa B'
   },
   {
@@ -121,7 +121,7 @@ export const MATCHES = [
     awayName: 'Paragwaj',
     homeFlag: '🇺🇸',
     awayFlag: '🇵🇾',
-    startTime: '2026-06-12T19:00:00',
+    startTime: '2026-06-13T03:00:00',
     stage: 'Grupa D'
   },
   {
@@ -132,7 +132,7 @@ export const MATCHES = [
     awayName: 'Szwajcaria',
     homeFlag: '🇶🇦',
     awayFlag: '🇨🇭',
-    startTime: '2026-06-13T13:00:00',
+    startTime: '2026-06-13T21:00:00',
     stage: 'Grupa B'
   },
   {
@@ -143,7 +143,7 @@ export const MATCHES = [
     awayName: 'Szkocja',
     homeFlag: '🇭🇹',
     awayFlag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-    startTime: '2026-06-13T16:00:00',
+    startTime: '2026-06-14T03:00:00',
     stage: 'Grupa C'
   },
   {
@@ -154,7 +154,7 @@ export const MATCHES = [
     awayName: 'Maroko',
     homeFlag: '🇧🇷',
     awayFlag: '🇲🇦',
-    startTime: '2026-06-13T19:00:00',
+    startTime: '2026-06-14T00:00:00',
     stage: 'Grupa C'
   },
   {
@@ -165,7 +165,7 @@ export const MATCHES = [
     awayName: 'Turcja',
     homeFlag: '🇦🇺',
     awayFlag: '🇹🇷',
-    startTime: '2026-06-13T22:00:00',
+    startTime: '2026-06-14T06:00:00',
     stage: 'Grupa D'
   },
   {
@@ -176,7 +176,7 @@ export const MATCHES = [
     awayName: 'Ekwador',
     homeFlag: '🇨🇮',
     awayFlag: '🇪🇨',
-    startTime: '2026-06-14T13:00:00',
+    startTime: '2026-06-15T01:00:00',
     stage: 'Grupa E'
   },
   {
@@ -187,7 +187,7 @@ export const MATCHES = [
     awayName: 'Curaçao',
     homeFlag: '🇩🇪',
     awayFlag: '🇨🇼',
-    startTime: '2026-06-14T16:00:00',
+    startTime: '2026-06-14T19:00:00',
     stage: 'Grupa E'
   },
   {
@@ -198,7 +198,7 @@ export const MATCHES = [
     awayName: 'Japonia',
     homeFlag: '🇳🇱',
     awayFlag: '🇯🇵',
-    startTime: '2026-06-14T19:00:00',
+    startTime: '2026-06-14T22:00:00',
     stage: 'Grupa F'
   },
   {
@@ -209,7 +209,7 @@ export const MATCHES = [
     awayName: 'Tunezja',
     homeFlag: '🇸🇪',
     awayFlag: '🇹🇳',
-    startTime: '2026-06-14T22:00:00',
+    startTime: '2026-06-15T04:00:00',
     stage: 'Grupa F'
   },
   {
@@ -220,7 +220,7 @@ export const MATCHES = [
     awayName: 'Egipt',
     homeFlag: '🇧🇪',
     awayFlag: '🇪🇬',
-    startTime: '2026-06-15T13:00:00',
+    startTime: '2026-06-15T21:00:00',
     stage: 'Grupa G'
   },
   {
@@ -231,7 +231,7 @@ export const MATCHES = [
     awayName: 'Wyspy Zielonego Przylądka',
     homeFlag: '🇪🇸',
     awayFlag: '🇨🇻',
-    startTime: '2026-06-15T16:00:00',
+    startTime: '2026-06-15T18:00:00',
     stage: 'Grupa H'
   },
   {
@@ -242,7 +242,7 @@ export const MATCHES = [
     awayName: 'Nowa Zelandia',
     homeFlag: '🇮🇷',
     awayFlag: '🇳🇿',
-    startTime: '2026-06-15T19:00:00',
+    startTime: '2026-06-16T03:00:00',
     stage: 'Grupa G'
   },
   {
@@ -253,7 +253,7 @@ export const MATCHES = [
     awayName: 'Urugwaj',
     homeFlag: '🇸🇦',
     awayFlag: '🇺🇾',
-    startTime: '2026-06-15T22:00:00',
+    startTime: '2026-06-16T00:00:00',
     stage: 'Grupa H'
   },
   {
@@ -264,7 +264,7 @@ export const MATCHES = [
     awayName: 'Algieria',
     homeFlag: '🇦🇷',
     awayFlag: '🇩🇿',
-    startTime: '2026-06-16T15:00:00',
+    startTime: '2026-06-17T03:00:00',
     stage: 'Grupa J'
   },
   {
@@ -275,7 +275,7 @@ export const MATCHES = [
     awayName: 'Senegal',
     homeFlag: '🇫🇷',
     awayFlag: '🇸🇳',
-    startTime: '2026-06-16T18:00:00',
+    startTime: '2026-06-16T21:00:00',
     stage: 'Grupa I'
   },
   {
@@ -286,7 +286,7 @@ export const MATCHES = [
     awayName: 'Norwegia',
     homeFlag: '🇮🇶',
     awayFlag: '🇳🇴',
-    startTime: '2026-06-16T21:00:00',
+    startTime: '2026-06-17T00:00:00',
     stage: 'Grupa I'
   }
 ];

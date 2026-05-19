@@ -4,8 +4,8 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=4';
-import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=4';
+import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=5';
+import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=5';
 
 export class UIComponents {
   constructor(app) {
@@ -281,8 +281,8 @@ export class UIComponents {
     const isOwner = room.owner === currentUser;
     const virtualTime = new Date(room.virtualTime || '2026-06-10T12:00:00');
     
-    // Check if tournament has started based on first match time (2026-06-11 17:00)
-    const isStarted = virtualTime >= new Date('2026-06-11T17:00:00');
+    // Check if tournament has started based on first match time (2026-06-11 21:00)
+    const isStarted = virtualTime >= new Date('2026-06-11T21:00:00');
 
     container.innerHTML = `
       <div class="dashboard-wrapper">
@@ -443,7 +443,7 @@ export class UIComponents {
                       ${(() => {
                         const sp = room.specialPredictions[user.username] || {};
                         const res = room.results || {};
-                        const isSpecLocked = virtualTime >= new Date('2026-06-11T17:00:00');
+                        const isSpecLocked = virtualTime >= new Date('2026-06-11T21:00:00');
 
                         const renderSpecItem = (label, predVal, resVal, score) => {
                           let displayPred = predVal || 'Brak typu';
@@ -747,8 +747,8 @@ export class UIComponents {
     const currentUser = this.app.db.getCurrentUser();
     const virtualTime = new Date(room.virtualTime || '2026-06-10T12:00:00');
     
-    // First match kick-off: 2026-06-11 17:00
-    const isLocked = virtualTime >= new Date('2026-06-11T17:00:00');
+    // First match kick-off: 2026-06-11 21:00
+    const isLocked = virtualTime >= new Date('2026-06-11T21:00:00');
     
     const userSpecial = room.specialPredictions[currentUser] || {};
     const results = room.results || {};
@@ -1009,7 +1009,7 @@ export class UIComponents {
 
             <div class="sim-quick-buttons">
               <button class="btn btn-outline-cyan btn-time-set" data-time="2026-06-10T12:00:00">Przed Mundialem (10.06)</button>
-              <button class="btn btn-outline-cyan btn-time-set" data-time="2026-06-11T17:30:00">W trakcie meczu otwarcia (11.06 17:30)</button>
+              <button class="btn btn-outline-cyan btn-time-set" data-time="2026-06-11T21:30:00">W trakcie meczu otwarcia (11.06 21:30)</button>
               <button class="btn btn-outline-cyan btn-time-set" data-time="2026-06-12T18:00:00">Drugi dzień Mundialu (12.06 18:00)</button>
               <button class="btn btn-outline-cyan btn-time-set" data-time="2026-06-16T12:00:00">Po fazie grupowej (16.06)</button>
             </div>
