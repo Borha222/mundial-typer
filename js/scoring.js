@@ -4,7 +4,7 @@
  * Provides sorted room leaderboard with tie-breakers.
  */
 
-import { MATCHES } from './matches.js?v=5';
+import { MATCHES } from './matches.js?v=6';
 
 /**
  * Calculates points for a single match prediction.
@@ -154,3 +154,154 @@ export function calculateRoomLeaderboard(room) {
 
   return rankings;
 }
+
+/**
+ * Calculates standings for a specific group A to L based on FIFA rules.
+ * Sort criteria:
+ * 1. Points (3 for win, 1 for draw, 0 for loss)
+ * 2. Goal Difference in all group matches
+ * 3. Greatest goals scored in all group matches
+ * 4. Head-to-Head stats (H2H points, H2H goal diff, H2H goals scored)
+ * 5. Alphabetical fallback
+ */
+export function calculateGroupStandings(groupLetter, matchScores) {
+  const teamIds = new Set();
+  const groupMatches = MATCHES.filter(m => {
+    const matchGroup = m.stage.match(/Grupa\s+([A-L])/);
+    if (matchGroup && matchGroup[1] === groupLetter) {
+      teamIds.add(m.home);
+      teamIds.add(m.away);
+      return true;
+    }
+    return false;
+  });
+
+  const stats = {};
+  teamIds.forEach(id => {
+    stats[id] = {
+      id: id,
+      played: 0,
+      won: 0,
+      drawn: 0,
+      lost: 0,
+      goalsFor: 0,
+      goalsAgainst: 0,
+      goalDifference: 0,
+      points: 0
+    };
+  });
+
+  groupMatches.forEach(m => {
+    const score = matchScores[m.id];
+    if (score && score.home !== undefined && score.away !== undefined) {
+      const homeScore = parseInt(score.home, 10);
+      const awayScore = parseInt(score.away, 10);
+      
+      const homeStats = stats[m.home];
+      const awayStats = stats[m.away];
+
+      if (homeStats && awayStats) {
+        homeStats.played++;
+        awayStats.played++;
+
+        homeStats.goalsFor += homeScore;
+        homeStats.goalsAgainst += awayScore;
+        awayStats.goalsFor += awayScore;
+        awayStats.goalsAgainst += homeScore;
+
+        if (homeScore > awayScore) {
+          homeStats.won++;
+          homeStats.points += 3;
+          awayStats.lost++;
+        } else if (homeScore < awayScore) {
+          awayStats.won++;
+          awayStats.points += 3;
+          homeStats.lost++;
+        } else {
+          homeStats.drawn++;
+          homeStats.points += 1;
+          awayStats.drawn++;
+          awayStats.points += 1;
+        }
+      }
+    }
+  });
+
+  Object.values(stats).forEach(t => {
+    t.goalDifference = t.goalsFor - t.goalsAgainst;
+  });
+
+  const standings = Object.values(stats);
+
+  standings.sort((a, b) => {
+    if (b.points !== a.points) {
+      return b.points - a.points;
+    }
+    if (b.goalDifference !== a.goalDifference) {
+      return b.goalDifference - a.goalDifference;
+    }
+    if (b.goalsFor !== a.goalsFor) {
+      return b.goalsFor - a.goalsFor;
+    }
+
+    const h2hMatches = groupMatches.filter(m => 
+      (m.home === a.id && m.away === b.id) || (m.home === b.id && m.away === a.id)
+    );
+
+    let aH2hPoints = 0;
+    let bH2hPoints = 0;
+    let aH2hGoals = 0;
+    let bH2hGoals = 0;
+
+    h2hMatches.forEach(m => {
+      const score = matchScores[m.id];
+      if (score && score.home !== undefined && score.away !== undefined) {
+        const homeScore = parseInt(score.home, 10);
+        const awayScore = parseInt(score.away, 10);
+
+        if (m.home === a.id) {
+          aH2hGoals += homeScore;
+          bH2hGoals += awayScore;
+          if (homeScore > awayScore) {
+            aH2hPoints += 3;
+          } else if (homeScore < awayScore) {
+            bH2hPoints += 3;
+          } else {
+            aH2hPoints += 1;
+            bH2hPoints += 1;
+          }
+        } else {
+          bH2hGoals += homeScore;
+          aH2hGoals += awayScore;
+          if (homeScore > awayScore) {
+            bH2hPoints += 3;
+          } else if (homeScore < awayScore) {
+            aH2hPoints += 3;
+          } else {
+            bH2hPoints += 1;
+            aH2hPoints += 1;
+          }
+        }
+      }
+    });
+
+    if (bH2hPoints !== aH2hPoints) {
+      return bH2hPoints - aH2hPoints;
+    }
+    
+    const aH2hDiff = aH2hGoals - bH2hGoals;
+    const bH2hDiff = bH2hGoals - aH2hGoals;
+    if (bH2hDiff !== aH2hDiff) {
+      return bH2hDiff - aH2hDiff;
+    }
+
+    if (bH2hGoals !== aH2hGoals) {
+      return bH2hGoals - aH2hGoals;
+    }
+
+    return a.id.localeCompare(b.id);
+  });
+
+  return standings;
+}
+

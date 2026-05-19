@@ -1470,3 +1470,120 @@ input:focus, select:focus, textarea:focus {
   color: var(--color-cyan);
 }
 
+/* ==========================================
+   TAB: GROUP STANDINGS (TABELE GRUPOWE)
+   ========================================== */
+.groups-tab-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .groups-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .groups-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.group-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  padding: 16px;
+}
+
+.group-card-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.group-card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.group-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.group-table th {
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.group-table td {
+  padding: 8px 6px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  vertical-align: middle;
+}
+
+.group-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.group-table .pos-cell {
+  color: var(--text-muted);
+  width: 25px;
+}
+
+.group-table .team-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.group-table .team-name-text {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.group-table .points-cell {
+  color: var(--color-cyan);
+  font-size: 14px;
+}
+
+/* FIFA Advancement positions (Top 2) highlight */
+.row-advancement td {
+  background-color: rgba(6, 182, 212, 0.03);
+}
+
+.row-advancement .pos-cell {
+  color: var(--color-cyan);
+  text-shadow: 0 0 4px var(--color-cyan-glow);
+}
+
+.row-advancement {
+  border-left: 2px solid var(--color-cyan);
+}
+
+

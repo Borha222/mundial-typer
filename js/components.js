@@ -4,8 +4,8 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=5';
-import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=5';
+import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=6';
+import { calculateRoomLeaderboard, calculateMatchPoints, calculateGroupStandings } from './scoring.js?v=6';
 
 export class UIComponents {
   constructor(app) {
@@ -312,6 +312,7 @@ export class UIComponents {
         <nav class="dashboard-tabs glass">
           <button class="nav-tab active" data-tab="tab-leaderboard">🏆 Tabela Liderów</button>
           <button class="nav-tab" data-tab="tab-matches">⚽ Typuj Mecze</button>
+          <button class="nav-tab" data-tab="tab-groups">📊 Tabele Grupowe</button>
           <button class="nav-tab" data-tab="tab-special">🔮 Typy Długoterminowe</button>
           ${isOwner ? `<button class="nav-tab tab-accent" data-tab="tab-admin">🛠 Panel Admina (Host)</button>` : ''}
         </nav>
@@ -354,6 +355,8 @@ export class UIComponents {
       this.renderTabLeaderboard(contentContainer, room);
     } else if (tabName === 'tab-matches') {
       this.renderTabMatches(contentContainer, room);
+    } else if (tabName === 'tab-groups') {
+      this.renderTabGroups(contentContainer, room);
     } else if (tabName === 'tab-special') {
       this.renderTabSpecial(contentContainer, room);
     } else if (tabName === 'tab-admin') {
@@ -741,7 +744,78 @@ export class UIComponents {
   }
 
   /**
+   * Tab: Group Standings Component (Real-time standings)
+   */
+  renderTabGroups(container, room) {
+    const groupLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+    const matchScores = room.matchScores || {};
+
+    const groupsHtml = groupLetters.map(groupLetter => {
+      const standings = calculateGroupStandings(groupLetter, matchScores);
+
+      const rowsHtml = standings.map((team, index) => {
+        const teamObj = findTeamById(team.id);
+        const teamName = teamObj ? teamObj.name : team.id;
+        const flagHtml = getTeamFlagHtml(team.id);
+        const isAdvancing = index < 2; // Top 2 advance
+
+        return `
+          <tr class="${isAdvancing ? 'row-advancement' : ''}">
+            <td class="text-center font-bold pos-cell">${index + 1}</td>
+            <td class="team-cell">${flagHtml} <span class="team-name-text">${teamName}</span></td>
+            <td class="text-center">${team.played}</td>
+            <td class="text-center text-success">${team.won}</td>
+            <td class="text-center text-muted">${team.drawn}</td>
+            <td class="text-center text-danger">${team.lost}</td>
+            <td class="text-center text-light-gray">${team.goalsFor}:${team.goalsAgainst}</td>
+            <td class="text-center font-bold points-cell">${team.points}</td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <div class="group-card glass-card hover-lift">
+          <div class="group-card-header">
+            <h3>Grupa ${groupLetter}</h3>
+          </div>
+          <table class="group-table">
+            <thead>
+              <tr>
+                <th class="text-center" style="width: 30px;">#</th>
+                <th>Drużyna</th>
+                <th class="text-center" style="width: 25px;">M</th>
+                <th class="text-center text-success" style="width: 25px;">Z</th>
+                <th class="text-center text-muted" style="width: 25px;">R</th>
+                <th class="text-center text-danger" style="width: 25px;">P</th>
+                <th class="text-center text-light-gray" style="width: 45px;">Bramki</th>
+                <th class="text-center font-bold" style="width: 35px;">Pkt</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="groups-tab-container">
+        <div class="tab-section-header glass-card">
+          <h3>📊 Tabele Fazy Grupowej</h3>
+          <p>Podgląd tabel grup A do L w czasie rzeczywistym. Kolejność w tabelach jest wyliczana automatycznie zgodnie z oficjalnymi zasadami FIFA (Punkty ➔ Bilans bramek ➔ Bramki zdobyte ➔ Bezpośrednie pojedynki ➔ Alfabet). Dwa pierwsze zespoły z każdej grupy uzyskują awans.</p>
+        </div>
+        
+        <div class="groups-grid">
+          ${groupsHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  /**
    * Tab 3: Special Long-term Predictions Component
+
    */
   renderTabSpecial(container, room) {
     const currentUser = this.app.db.getCurrentUser();
