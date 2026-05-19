@@ -4,8 +4,8 @@
  * Note: Variable names and code are in English, but user-facing text is in Polish.
  */
 
-import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=3';
-import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=3';
+import { TEAMS, PLAYERS, MATCHES, findTeamById, getTeamFlagHtml } from './matches.js?v=4';
+import { calculateRoomLeaderboard, calculateMatchPoints } from './scoring.js?v=4';
 
 export class UIComponents {
   constructor(app) {
