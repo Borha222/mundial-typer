@@ -297,7 +297,7 @@ export const MATCHES = [
     awayName: 'Jordania',
     homeFlag: '🇦🇹',
     awayFlag: '🇯🇴',
-    startTime: '2026-06-17T18:00:00',
+    startTime: '2026-06-17T06:00:00',
     stage: 'Grupa J'
   },
   {
@@ -308,7 +308,7 @@ export const MATCHES = [
     awayName: 'DR Kongo',
     homeFlag: '🇵🇹',
     awayFlag: '🇨🇩',
-    startTime: '2026-06-17T21:00:00',
+    startTime: '2026-06-17T19:00:00',
     stage: 'Grupa K'
   },
   {
@@ -319,7 +319,7 @@ export const MATCHES = [
     awayName: 'Kolumbia',
     homeFlag: '🇺🇿',
     awayFlag: '🇨🇴',
-    startTime: '2026-06-18T03:00:00',
+    startTime: '2026-06-18T04:00:00',
     stage: 'Grupa K'
   },
   {
@@ -330,7 +330,7 @@ export const MATCHES = [
     awayName: 'Korea Południowa',
     homeFlag: '🇲🇽',
     awayFlag: '🇰🇷',
-    startTime: '2026-06-18T18:00:00',
+    startTime: '2026-06-19T03:00:00',
     stage: 'Grupa A'
   },
   {
@@ -341,7 +341,7 @@ export const MATCHES = [
     awayName: 'Chorwacja',
     homeFlag: '🏴‍󠁧‍󠁢‍󠁥‍󠁮‍󠁧‍󠁿',
     awayFlag: '🇭🇷',
-    startTime: '2026-06-18T21:00:00',
+    startTime: '2026-06-17T22:00:00',
     stage: 'Grupa L'
   },
   {
@@ -352,7 +352,7 @@ export const MATCHES = [
     awayName: 'Czechy',
     homeFlag: '🇿🇦',
     awayFlag: '🇨🇿',
-    startTime: '2026-06-19T00:00:00',
+    startTime: '2026-06-18T18:00:00',
     stage: 'Grupa A'
   },
   {
@@ -363,7 +363,7 @@ export const MATCHES = [
     awayName: 'Panama',
     homeFlag: '🇬🇭',
     awayFlag: '🇵🇦',
-    startTime: '2026-06-19T03:00:00',
+    startTime: '2026-06-18T01:00:00',
     stage: 'Grupa L'
   },
   {
@@ -374,7 +374,7 @@ export const MATCHES = [
     awayName: 'Katar',
     homeFlag: '🇨🇦',
     awayFlag: '🇶🇦',
-    startTime: '2026-06-19T18:00:00',
+    startTime: '2026-06-19T00:00:00',
     stage: 'Grupa B'
   },
   {
@@ -385,7 +385,7 @@ export const MATCHES = [
     awayName: 'Szwajcaria',
     homeFlag: '🇧🇦',
     awayFlag: '🇨🇭',
-    startTime: '2026-06-19T21:00:00',
+    startTime: '2026-06-18T21:00:00',
     stage: 'Grupa B'
   },
   {
@@ -396,7 +396,7 @@ export const MATCHES = [
     awayName: 'Haiti',
     homeFlag: '🇧🇷',
     awayFlag: '🇭🇹',
-    startTime: '2026-06-20T00:00:00',
+    startTime: '2026-06-20T02:30:00',
     stage: 'Grupa C'
   },
   {
@@ -407,7 +407,7 @@ export const MATCHES = [
     awayName: 'Szkocja',
     homeFlag: '🇲🇦',
     awayFlag: '🏴‍󠁧‍󠁢‍󠁳‍󠁣‍󠁴‍󠁿',
-    startTime: '2026-06-20T03:00:00',
+    startTime: '2026-06-20T00:00:00',
     stage: 'Grupa C'
   },
   {
@@ -418,7 +418,7 @@ export const MATCHES = [
     awayName: 'Australia',
     homeFlag: '🇺🇸',
     awayFlag: '🇦🇺',
-    startTime: '2026-06-20T18:00:00',
+    startTime: '2026-06-19T21:00:00',
     stage: 'Grupa D'
   },
   {
@@ -429,7 +429,7 @@ export const MATCHES = [
     awayName: 'Turcja',
     homeFlag: '🇵🇾',
     awayFlag: '🇹🇷',
-    startTime: '2026-06-20T21:00:00',
+    startTime: '2026-06-20T05:00:00',
     stage: 'Grupa D'
   },
   {
@@ -440,7 +440,7 @@ export const MATCHES = [
     awayName: 'Wybrzeże Kości Słoniowej',
     homeFlag: '🇩🇪',
     awayFlag: '🇨🇮',
-    startTime: '2026-06-21T00:00:00',
+    startTime: '2026-06-20T22:00:00',
     stage: 'Grupa E'
   },
   {
@@ -451,7 +451,7 @@ export const MATCHES = [
     awayName: 'Ekwador',
     homeFlag: '🇨🇼',
     awayFlag: '🇪🇨',
-    startTime: '2026-06-21T03:00:00',
+    startTime: '2026-06-21T02:00:00',
     stage: 'Grupa E'
   },
   {
@@ -462,7 +462,7 @@ export const MATCHES = [
     awayName: 'Szwecja',
     homeFlag: '🇳🇱',
     awayFlag: '🇸🇪',
-    startTime: '2026-06-21T18:00:00',
+    startTime: '2026-06-20T19:00:00',
     stage: 'Grupa F'
   },
   {
@@ -473,7 +473,7 @@ export const MATCHES = [
     awayName: 'Tunezja',
     homeFlag: '🇯🇵',
     awayFlag: '🇹🇳',
-    startTime: '2026-06-21T21:00:00',
+    startTime: '2026-06-21T06:00:00',
     stage: 'Grupa F'
   },
   {
@@ -484,7 +484,7 @@ export const MATCHES = [
     awayName: 'Iran',
     homeFlag: '🇧🇪',
     awayFlag: '🇮🇷',
-    startTime: '2026-06-22T00:00:00',
+    startTime: '2026-06-21T21:00:00',
     stage: 'Grupa G'
   },
   {
@@ -506,7 +506,7 @@ export const MATCHES = [
     awayName: 'Arabia Saudyjska',
     homeFlag: '🇪🇸',
     awayFlag: '🇸🇦',
-    startTime: '2026-06-22T18:00:00',
+    startTime: '2026-06-21T18:00:00',
     stage: 'Grupa H'
   },
   {
@@ -517,7 +517,7 @@ export const MATCHES = [
     awayName: 'Urugwaj',
     homeFlag: '🇨🇻',
     awayFlag: '🇺🇾',
-    startTime: '2026-06-22T21:00:00',
+    startTime: '2026-06-22T00:00:00',
     stage: 'Grupa H'
   },
   {
@@ -528,7 +528,7 @@ export const MATCHES = [
     awayName: 'Irak',
     homeFlag: '🇫🇷',
     awayFlag: '🇮🇶',
-    startTime: '2026-06-23T00:00:00',
+    startTime: '2026-06-22T23:00:00',
     stage: 'Grupa I'
   },
   {
@@ -539,7 +539,7 @@ export const MATCHES = [
     awayName: 'Norwegia',
     homeFlag: '🇸🇳',
     awayFlag: '🇳🇴',
-    startTime: '2026-06-23T03:00:00',
+    startTime: '2026-06-23T02:00:00',
     stage: 'Grupa I'
   },
   {
@@ -550,7 +550,7 @@ export const MATCHES = [
     awayName: 'Austria',
     homeFlag: '🇦🇷',
     awayFlag: '🇦🇹',
-    startTime: '2026-06-23T18:00:00',
+    startTime: '2026-06-22T19:00:00',
     stage: 'Grupa J'
   },
   {
@@ -561,7 +561,7 @@ export const MATCHES = [
     awayName: 'Jordania',
     homeFlag: '🇩🇿',
     awayFlag: '🇯🇴',
-    startTime: '2026-06-23T21:00:00',
+    startTime: '2026-06-23T05:00:00',
     stage: 'Grupa J'
   },
   {
@@ -572,7 +572,7 @@ export const MATCHES = [
     awayName: 'Uzbekistan',
     homeFlag: '🇵🇹',
     awayFlag: '🇺🇿',
-    startTime: '2026-06-24T00:00:00',
+    startTime: '2026-06-23T19:00:00',
     stage: 'Grupa K'
   },
   {
@@ -583,7 +583,7 @@ export const MATCHES = [
     awayName: 'Kolumbia',
     homeFlag: '🇨🇩',
     awayFlag: '🇨🇴',
-    startTime: '2026-06-24T03:00:00',
+    startTime: '2026-06-24T04:00:00',
     stage: 'Grupa K'
   },
   {
@@ -594,7 +594,7 @@ export const MATCHES = [
     awayName: 'Ghana',
     homeFlag: '🏴‍󠁧‍󠁢‍󠁥‍󠁮‍󠁧‍󠁿',
     awayFlag: '🇬🇭',
-    startTime: '2026-06-24T18:00:00',
+    startTime: '2026-06-23T22:00:00',
     stage: 'Grupa L'
   },
   {
@@ -605,7 +605,7 @@ export const MATCHES = [
     awayName: 'Panama',
     homeFlag: '🇭🇷',
     awayFlag: '🇵🇦',
-    startTime: '2026-06-24T21:00:00',
+    startTime: '2026-06-24T01:00:00',
     stage: 'Grupa L'
   },
   {
@@ -616,7 +616,7 @@ export const MATCHES = [
     awayName: 'Czechy',
     homeFlag: '🇲🇽',
     awayFlag: '🇨🇿',
-    startTime: '2026-06-25T18:00:00',
+    startTime: '2026-06-25T03:00:00',
     stage: 'Grupa A'
   },
   {
@@ -627,7 +627,7 @@ export const MATCHES = [
     awayName: 'Korea Południowa',
     homeFlag: '🇿🇦',
     awayFlag: '🇰🇷',
-    startTime: '2026-06-25T18:00:00',
+    startTime: '2026-06-25T03:00:00',
     stage: 'Grupa A'
   },
   {
@@ -638,7 +638,7 @@ export const MATCHES = [
     awayName: 'Szwajcaria',
     homeFlag: '🇨🇦',
     awayFlag: '🇨🇭',
-    startTime: '2026-06-25T21:00:00',
+    startTime: '2026-06-24T21:00:00',
     stage: 'Grupa B'
   },
   {
@@ -649,7 +649,7 @@ export const MATCHES = [
     awayName: 'Katar',
     homeFlag: '🇧🇦',
     awayFlag: '🇶🇦',
-    startTime: '2026-06-25T21:00:00',
+    startTime: '2026-06-24T21:00:00',
     stage: 'Grupa B'
   },
   {
@@ -660,7 +660,7 @@ export const MATCHES = [
     awayName: 'Szkocja',
     homeFlag: '🇧🇷',
     awayFlag: '🏴‍󠁧‍󠁢‍󠁳‍󠁣‍󠁴‍󠁿',
-    startTime: '2026-06-26T00:00:00',
+    startTime: '2026-06-25T00:00:00',
     stage: 'Grupa C'
   },
   {
@@ -671,7 +671,7 @@ export const MATCHES = [
     awayName: 'Haiti',
     homeFlag: '🇲🇦',
     awayFlag: '🇭🇹',
-    startTime: '2026-06-26T00:00:00',
+    startTime: '2026-06-25T00:00:00',
     stage: 'Grupa C'
   },
   {
@@ -682,7 +682,7 @@ export const MATCHES = [
     awayName: 'Turcja',
     homeFlag: '🇺🇸',
     awayFlag: '🇹🇷',
-    startTime: '2026-06-26T03:00:00',
+    startTime: '2026-06-26T04:00:00',
     stage: 'Grupa D'
   },
   {
@@ -693,7 +693,7 @@ export const MATCHES = [
     awayName: 'Australia',
     homeFlag: '🇵🇾',
     awayFlag: '🇦🇺',
-    startTime: '2026-06-26T03:00:00',
+    startTime: '2026-06-26T04:00:00',
     stage: 'Grupa D'
   },
   {
@@ -704,7 +704,7 @@ export const MATCHES = [
     awayName: 'Ekwador',
     homeFlag: '🇩🇪',
     awayFlag: '🇪🇨',
-    startTime: '2026-06-26T18:00:00',
+    startTime: '2026-06-25T22:00:00',
     stage: 'Grupa E'
   },
   {
@@ -715,7 +715,7 @@ export const MATCHES = [
     awayName: 'Wybrzeże Kości Słoniowej',
     homeFlag: '🇨🇼',
     awayFlag: '🇨🇮',
-    startTime: '2026-06-26T18:00:00',
+    startTime: '2026-06-25T22:00:00',
     stage: 'Grupa E'
   },
   {
@@ -726,7 +726,7 @@ export const MATCHES = [
     awayName: 'Tunezja',
     homeFlag: '🇳🇱',
     awayFlag: '🇹🇳',
-    startTime: '2026-06-26T21:00:00',
+    startTime: '2026-06-26T01:00:00',
     stage: 'Grupa F'
   },
   {
@@ -737,7 +737,7 @@ export const MATCHES = [
     awayName: 'Szwecja',
     homeFlag: '🇯🇵',
     awayFlag: '🇸🇪',
-    startTime: '2026-06-26T21:00:00',
+    startTime: '2026-06-26T01:00:00',
     stage: 'Grupa F'
   },
   {
@@ -748,7 +748,7 @@ export const MATCHES = [
     awayName: 'Nowa Zelandia',
     homeFlag: '🇧🇪',
     awayFlag: '🇳🇿',
-    startTime: '2026-06-27T00:00:00',
+    startTime: '2026-06-27T05:00:00',
     stage: 'Grupa G'
   },
   {
@@ -759,7 +759,7 @@ export const MATCHES = [
     awayName: 'Iran',
     homeFlag: '🇪🇬',
     awayFlag: '🇮🇷',
-    startTime: '2026-06-27T00:00:00',
+    startTime: '2026-06-27T05:00:00',
     stage: 'Grupa G'
   },
   {
@@ -770,7 +770,7 @@ export const MATCHES = [
     awayName: 'Urugwaj',
     homeFlag: '🇪🇸',
     awayFlag: '🇺🇾',
-    startTime: '2026-06-27T03:00:00',
+    startTime: '2026-06-27T02:00:00',
     stage: 'Grupa H'
   },
   {
@@ -781,7 +781,7 @@ export const MATCHES = [
     awayName: 'Arabia Saudyjska',
     homeFlag: '🇨🇻',
     awayFlag: '🇸🇦',
-    startTime: '2026-06-27T03:00:00',
+    startTime: '2026-06-27T02:00:00',
     stage: 'Grupa H'
   },
   {
@@ -792,7 +792,7 @@ export const MATCHES = [
     awayName: 'Panama',
     homeFlag: '🏴‍󠁧‍󠁢‍󠁥‍󠁮‍󠁧‍󠁿',
     awayFlag: '🇵🇦',
-    startTime: '2026-06-27T12:00:00',
+    startTime: '2026-06-27T23:00:00',
     stage: 'Grupa L'
   },
   {
@@ -803,7 +803,7 @@ export const MATCHES = [
     awayName: 'Ghana',
     homeFlag: '🇭🇷',
     awayFlag: '🇬🇭',
-    startTime: '2026-06-27T12:00:00',
+    startTime: '2026-06-27T23:00:00',
     stage: 'Grupa L'
   },
   {
@@ -814,7 +814,7 @@ export const MATCHES = [
     awayName: 'Kolumbia',
     homeFlag: '🇵🇹',
     awayFlag: '🇨🇴',
-    startTime: '2026-06-27T15:00:00',
+    startTime: '2026-06-28T01:30:00',
     stage: 'Grupa K'
   },
   {
@@ -825,7 +825,7 @@ export const MATCHES = [
     awayName: 'Uzbekistan',
     homeFlag: '🇨🇩',
     awayFlag: '🇺🇿',
-    startTime: '2026-06-27T15:00:00',
+    startTime: '2026-06-28T01:30:00',
     stage: 'Grupa K'
   },
   {
@@ -836,7 +836,7 @@ export const MATCHES = [
     awayName: 'Norwegia',
     homeFlag: '🇫🇷',
     awayFlag: '🇳🇴',
-    startTime: '2026-06-27T18:00:00',
+    startTime: '2026-06-26T21:00:00',
     stage: 'Grupa I'
   },
   {
@@ -847,7 +847,7 @@ export const MATCHES = [
     awayName: 'Irak',
     homeFlag: '🇸🇳',
     awayFlag: '🇮🇶',
-    startTime: '2026-06-27T18:00:00',
+    startTime: '2026-06-26T21:00:00',
     stage: 'Grupa I'
   },
   {
@@ -858,7 +858,7 @@ export const MATCHES = [
     awayName: 'Jordania',
     homeFlag: '🇦🇷',
     awayFlag: '🇯🇴',
-    startTime: '2026-06-27T21:00:00',
+    startTime: '2026-06-28T04:00:00',
     stage: 'Grupa J'
   },
   {
@@ -869,7 +869,7 @@ export const MATCHES = [
     awayName: 'Austria',
     homeFlag: '🇩🇿',
     awayFlag: '🇦🇹',
-    startTime: '2026-06-27T21:00:00',
+    startTime: '2026-06-28T04:00:00',
     stage: 'Grupa J'
   }
 ];
